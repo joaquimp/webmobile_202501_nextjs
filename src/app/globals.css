@@ -1,0 +1,54 @@
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+main {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+footer {
+  height: 40px;
+  padding: 0;
+  margin: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 8px;
+  padding: 12px;
+  width: 250px;
+  height: 200px;
+  border-radius: 8px;
+  box-shadow: 4px 4px 8px 2px rgba(0,0,0,0.25);
+}
+
+.card > header {
+  display: flex;
+  align-items: center;
+}
+
+.card_title {
+  font-size: large;
+  font-weight: 900;
+}
+
+.card > header > img {
+  width: 32px;
+  
+}
+
+.card_list {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
