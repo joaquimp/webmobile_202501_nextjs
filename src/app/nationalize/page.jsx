@@ -1,17 +1,31 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Notionalize() {
     const [paises, setPaises] = useState([]);
-    const [nome, setNome] = useState("Joaquim");
+    const [nome, setNome] = useState("Manuel");
+    const [erro, setErro] = useState(null);
 
     const buscar = async () => {
-        console.log(nome);
-        const resp = await fetch(`https://api.nationalize.io/?name=${nome}`);
-        const json = await resp.json();
-        setPaises(json.country);
+        try {
+            const resp = await fetch("https://api.nationalize.io/?name="+nome);
+            const json = await resp.json();
+            if(json.error) {
+                setErro(json.error);
+                setPaises([]);
+            } else {
+                setPaises(json.country);
+                setErro(null);
+            }
+        }catch(error) {
+            setErro("Deu ruim no fetch");
+        }
     }
+
+    useEffect(() => {
+        buscar();
+    },[]);
 
     const paisesJSX = paises.map((p) => {
         return (
@@ -29,12 +43,13 @@ export default function Notionalize() {
     return (
         <main>
             <h1>Lista de Paises</h1>
+            {erro && <h2>{erro}</h2>}
             <section className="paises">
                 {paisesJSX}
             </section>
             <br/>
             <>
-                Nome: <input type="text" value={nome} onChange={mudaNome} />
+                Nome: <input type="text" defaultValue={nome} onChange={mudaNome} />
                 <br/>
                 <button onClick={buscar}>Buscar</button>
             </>
